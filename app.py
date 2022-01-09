@@ -24,19 +24,31 @@ def recommend(movie):
     return recommended_movie_names,recommended_movie_posters
 
 
-st.header('Movie Recommender System')
-movies = pickle.load(open('movie_list.pkl','rb'))
-similarity = pickle.load(open('similarity.pkl','rb'))
+st.header('Movie Recommendation System')
+
+try:
+    movies = pickle.load(open('movie_list.pkl','rb'))
+    similarity = pickle.load(open('similarity.pkl','rb'))
+except TypeError as e:
+    st.error(f"Error loading pickle files: {e}")
+    st.error("This is likely due to pandas version incompatibility. Please regenerate 'movie_list.pkl' and 'similarity.pkl' using your current Python 3.14 and pandas 2.3.3 environment.")
+    st.stop()
+except Exception as e:
+    st.error(f"An unexpected error occurred while loading pickle files: {e}")
+    st.error("Please ensure 'movie_list.pkl' and 'similarity.pkl' exist and are not corrupted.")
+    st.stop()
+
+
 
 movie_list = movies['title'].values
 selected_movie = st.selectbox(
-    "Group B Movie recommendation system",
+    "Created by : Ajinkya Arun Satuse ",
     movie_list
 )
 
 if st.button('Show Recommendation'):
     recommended_movie_names,recommended_movie_posters = recommend(selected_movie)
-    col1, col2, col3, col4, col5 = st.beta_columns(5)
+    col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
         st.text(recommended_movie_names[0])
         st.image(recommended_movie_posters[0])

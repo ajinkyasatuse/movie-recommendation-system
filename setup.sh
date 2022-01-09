@@ -1,8 +1,8 @@
-mkdir -p ~/.streamlit/credentials.toml
+mkdir -p ~/.streamlit/
 
 echo "\
 [server]\n\
-port =$port\n\
+port =$PORT\n\
 enableCORS =false\n\
 headless = true\n\
 \n\
